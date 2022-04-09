@@ -26,6 +26,7 @@ rooms = {}
 
 @html.route('/')
 def hello():
+    print('hello')
     return 'Hello World!'
 
 @ws.route('/echo')
@@ -53,7 +54,7 @@ def echo_socket(socket):
 
 
 app = Flask(__name__,
-            static_url_path='', 
+            static_url_path='',
             static_folder='')
 sockets = Sockets(app)
 
@@ -87,5 +88,5 @@ sockets.register_blueprint(ws, url_prefix=r'/')
 if __name__ == "__main__":
     from gevent import pywsgi
     from geventwebsocket.handler import WebSocketHandler
-    server = pywsgi.WSGIServer(('127.0.0.1', 5000), app, handler_class=WebSocketHandler)
+    server = pywsgi.WSGIServer(('0.0.0.0', 443), app, keyfile='privkey.pem', certfile='fullchain.pem', handler_class=WebSocketHandler)
     server.serve_forever()
