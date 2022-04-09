@@ -52,7 +52,9 @@ def echo_socket(socket):
         print(rooms)
 
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_url_path='', 
+            static_folder='')
 sockets = Sockets(app)
 
 @app.route("/")
@@ -63,7 +65,7 @@ def hello_world():
 def user():
     print(query := "SELECT * from users WHERE username='{}';".format(request.args.get('username')))
     cur.execute(query)
-    return '{}'.format(cur.fetchone())
+    return 'hello: {}'.format(cur.fetchone())
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -73,7 +75,7 @@ def signup():
         request.form.get('profile_img'),
         request.form.get('display_name')
     )
-    # print(query)
+    print(query)
     success = cur.execute(query)
     return 'success: {}'.format(success)
 

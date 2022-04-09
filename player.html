@@ -2,53 +2,12 @@
 <html>
 <head>
     <title>Video Player</title>
-    <link rel="stylesheet" type="text/css" href="https://s3.deovr.com/version/1/css/styles.css"/>
-    <script src="https://s3.deovr.com/version/1/js/bundle.js" async></script>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-        #overlay {
-            position: absolute;
-            height: 100%;
-            width: 100%;
-        }
-        #new_msg_btn {
-            position: relative;
-            right: 16px;
-            bottom: 16px;
-            padding: 2em;
-            background-color: darkblue;
-            color: white;
-            z-index: 9999999;
-            width: 0;
-        }
-    </style>
+    <script src="//cdn.delight-vr.com/latest/dl8-4894d1de2cfde393fa0bf8e13a3933dc0b7b7cb7.js" async></script>
 </head>
 <body>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/tjQGnXBn1WA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<script>
-    window.onload = function() {
-        permission();
-    }
-    function permission () {
-    if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
-        // (optional) Do something before API request prompt.
-        DeviceMotionEvent.requestPermission()
-            .then( response => {
-            // (optional) Do something after API prompt dismissed.
-            if ( response == "granted" ) {
-                window.addEventListener( "devicemotion", (e) => {
-                    // do something for 'e' here.
-                })
-            }
-        })
-            .catch( console.error )
-    } else {
-        alert( "DeviceMotionEvent is not defined" );
-    }
-}
-</script>
+    <dl8-video title="Example Video" author="Jane Doe" format="STEREO_180_LR"
+            poster="https://delight-vr.com/examples/elements/video/surf/surf-wallpaper.jpg" display-mode="inline" loop>
+        <source src="https://delight-vr.com/examples/elements/video/surf/get-barreled-in-tahiti-with-samsung-gear-vr_1440p.mp4" type="video/mp4" />
+    </dl8-video>
 </body>
 </html>
