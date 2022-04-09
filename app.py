@@ -28,7 +28,7 @@ def hello_world():
 def user():
     print(query := "SELECT * from users WHERE username='{}';".format(request.args.get('username')))
     cur.execute(query)
-    return 'hello: {}'.format(cur.fetchone())
+    return '{}'.format(cur.fetchone())
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -38,7 +38,7 @@ def signup():
         request.form.get('profile_img'),
         request.form.get('display_name')
     )
-    print(query)
+    # print(query)
     success = cur.execute(query)
     return 'success: {}'.format(success)
 
