@@ -53,6 +53,37 @@
 				const parts = value.split(`; ${name}=`);
 				if (parts.length === 2) return parts.pop().split(';').shift();
 			}
+
+			var webSocket = new WebSocket('ws://localhost:8000/echo');
+			var roomCode = '';
+			
+			function createRoom() {
+				webSocket.send("create_room:" + getCookie('username'));
+			}
+
+			function joinRoom() {
+				roomCode = prompt("What is your room code?");
+				webSocket.send('join_room:' + getCookie('username') + ':' + roomCode);
+				document.getElementById('start_buttons').innerText = "Room Code: " + roomCode;
+			}
+
+			webSocket.onmessage = function(event) {
+				console.log(event.data);
+				if(roomCode == '') {
+					roomCode = event.data;
+					document.getElementById('start_buttons').innerText = "Room Code: " + roomCode;
+				} else if(event.data.startsWith('[')) {
+					// todo update the profile pictures
+				} else {
+					alert('message: ' + event.data);
+				}
+			}
+
+			function sendMessage(msg) {
+				var message = roomCode + ':' + getCookie('username') + ':' + msg;
+				console.log('message: ' + message);
+				webSocket.send(message);
+			}
 		</script>
 	</body>
 </html>

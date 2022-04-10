@@ -38,11 +38,12 @@ def echo_socket(socket):
             socket.send('{}'.format(list(map(lambda x: x['username'], rooms[message.split(':')[2]]))))
         else:
             # <code>:<username>:<message>
+            print('message received: ' + message)
             code = message.split(':')[0]
             username = message.split(':')[1]
             message = message.split(':')[2]
             for sock in rooms[code]:
-                sock['socket'].send(message)
+                sock['socket'].send(username + ':' + message)
         print(rooms)
 
 
@@ -67,7 +68,7 @@ def signup():
     )
     print(query)
     success = cur.execute(query)
-    return 'success: {}'.format(success)
+    return 'success: {}, try to <a href="/index.html">log in</a>'.format(success is None)
 
 @app.route('/login', methods=['POST'])
 def login():
