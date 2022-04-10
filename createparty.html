@@ -57,7 +57,7 @@
 			}
 
 			var element = document.querySelector("dl8-video");
-			var webSocket = new WebSocket('ws://localhost:8000/echo');
+			var webSocket = new WebSocket('wss://vrparty.space/echo');
 			var roomCode = '';
 			
 			function createRoom() {
@@ -75,13 +75,15 @@
 				if(roomCode == '') {
 					roomCode = event.data;
 					document.getElementById('start_buttons').innerText = "Room Code: " + roomCode;
+					printInput();
 				} else if(event.data.startsWith('[')) {
 					// todo update the profile pictures
+					printInput();
 				} else if(event.data.startsWith('time:')) {
 					console.log('going to: ' + event.data.replace('time:', ''));
 					element.seek(parseFloat(event.data.replace('time:', '')));
 				} else {
-					alert('message: ' + event.data);
+					showMessage(event.data);
 				}
 			}
 
@@ -99,6 +101,56 @@
 				if(roomCode == '') return;
 				webSocket.send('time:' + roomCode + ':' + element.currentTime);
 			});
+
+			function printInput(){
+
+			let msg = [];
+			mic = true;
+
+			var message = document.querySelector("#msg");
+
+			var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+			var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+
+			var grammar = "#JSGF V1.0;";
+
+			var recognition = new SpeechRecognition();
+			var speechRecognitionList = new SpeechGrammarList();
+			speechRecognitionList.addFromString(grammar, 1);
+			recognition.grammars = speechRecognitionList;
+			recognition.continuous = true;
+			recognition.lang = "en-US";
+			recognition.interimResults = true;
+
+			recognition.onresult = function (event) {
+				var last = event.results.length - 1;
+				var command = event.results[last][0].transcript;
+				console.log(event.results[last][0].transcript);
+				event.stopImmediatePropagation();
+				sendMessage(command);
+
+				if (command.includes("turn off microphone")){
+					recognition.stop();
+					mic = false;
+				}
+
+			};
+
+			recognition.onspeechend = function () {
+				recognition.interimResults = false;
+			};
+
+			recognition.onerror = function (event) {
+				message.textContent = "Error occurred in recognition: " + event.error;
+			};
+
+			if (mic){
+				recognition.start();
+			}	
+
+
+			}
+
 		</script>
 	</body>
 </html>
