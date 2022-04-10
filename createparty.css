@@ -69,3 +69,13 @@ button{
     background-color: transparent;
     text-align: center;
  }
+
+ .chat-message {
+    position: fixed;
+    right: 10%;
+    top: 20%;
+    background-color: azure;
+    border-radius: 4px;
+    padding: 8px;
+    z-index: 2147483647;
+ }

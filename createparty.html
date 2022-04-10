@@ -9,6 +9,8 @@
 		<link rel="stylesheet" href="style2.css">
 	</head>
 	<body>
+		<div class="chat-message">
+		</div>
 		<script src="https://www.w3schools.com/lib/w3.js"></script>
   		<div>
 			<header>
@@ -16,7 +18,7 @@
 				<img class= "logo" src="icon.png" width="155px">
 				<span id="start_buttons">
 					<a href="javascript:createRoom()">Create Room</a>
-					<a href="javascript:joinRoom()">Join Roon</a>
+					<a href="javascript:joinRoom()">Join Room</a>
 				</span>
 				   <a herf="#">
 					   <button> <img class= "profile" src="profileicon.png", width="50px"> 
@@ -54,6 +56,7 @@
 				if (parts.length === 2) return parts.pop().split(';').shift();
 			}
 
+			var element = document.querySelector("dl8-video");
 			var webSocket = new WebSocket('ws://localhost:8000/echo');
 			var roomCode = '';
 			
@@ -74,6 +77,9 @@
 					document.getElementById('start_buttons').innerText = "Room Code: " + roomCode;
 				} else if(event.data.startsWith('[')) {
 					// todo update the profile pictures
+				} else if(event.data.startsWith('time:')) {
+					console.log('going to: ' + event.data.replace('time:', ''));
+					element.seek(parseFloat(event.data.replace('time:', '')));
 				} else {
 					alert('message: ' + event.data);
 				}
@@ -84,6 +90,15 @@
 				console.log('message: ' + message);
 				webSocket.send(message);
 			}
+
+			function showMessage(msg) {
+				document.getElementsByClassName('chat-message')[0].innerText = msg;
+			}
+
+			element.addEventListener('click', function(e) {
+				if(roomCode == '') return;
+				webSocket.send('time:' + roomCode + ':' + element.currentTime);
+			});
 		</script>
 	</body>
 </html>

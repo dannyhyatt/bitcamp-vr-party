@@ -36,6 +36,13 @@ def echo_socket(socket):
             rooms[message.split(':')[2]].append({'username' : message.split(':')[1], 'socket' : socket})
             
             socket.send('{}'.format(list(map(lambda x: x['username'], rooms[message.split(':')[2]]))))
+        elif message.startswith('time:'):
+            # time:<code>:<time>
+            print('message received: ' + message)
+            code = message.split(':')[1]
+            time = message.split(':')[2]
+            for sock in rooms[code]:
+                sock['socket'].send('time:' + time)
         else:
             # <code>:<username>:<message>
             print('message received: ' + message)
