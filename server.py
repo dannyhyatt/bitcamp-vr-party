@@ -12,9 +12,7 @@ conn = psycopg2.connect(
     password="bfoniXZ9evI3uRqe4R2vVw",
     port="26257")
 
-print(1)
 cur = conn.cursor()
-print(1)
 cur.execute('SELECT version()')
 db_version = cur.fetchone()
 print(db_version)

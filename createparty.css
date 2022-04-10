@@ -13,9 +13,9 @@
 #video{
     background-color: lightgray;
     float:left; 
-    margin-right:10px;
-    width: 900px;
-    height: 525px;
+    margin: auto;
+    width: 95%;
+    height: 95%;
     min-width: 350px;
     min-height: 350px;
     border-right:2px;
@@ -60,4 +60,12 @@ button{
      border:0;
      border-bottom:2px solid #000;    
    }
+ }
+
+ #start_buttons {
+    display: inline;
+    margin-right: auto;
+    margin-top: 2em;
+    background-color: transparent;
+    text-align: center;
  }
