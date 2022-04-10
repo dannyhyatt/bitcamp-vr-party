@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="createparty.css" />
+		<script src="createparty.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Join VR Room</title>
+		<script src="//cdn.delight-vr.com/latest/dl8-4894d1de2cfde393fa0bf8e13a3933dc0b7b7cb7.js" async></script>
+	</head>
+	<body>
+		<script src="https://www.w3schools.com/lib/w3.js"></script>
+  		<div w3-include-html="header.html"></div>
+  		<script>w3.includeHTML();</script>
+		<div class="wrapper">
+			<div id="video">    
+				<dl8-video title="vr video so cool" author="Jane d'oh" format="STEREO_360_LR"
+						poster="https://delight-vr.com/examples/elements/video/surf/surf-wallpaper.jpg" display-mode="inline" loop>
+					<source src="https://delight-vr.com/examples/elements/video/surf/get-barreled-in-tahiti-with-samsung-gear-vr_1440p.mp4" type="video/mp4" />
+				</dl8-video>
+			</div>
+			<div id="users">
+				<h3 style="background-color: lightblue;">Watchers</h3>
+				<h3 style="text-align:left"> <img src="particpanticon.png" width="25px"> user1 </h3>
+		</div>
+		<div id="link">
+			<input type="text" placeholder="Insert room link" id="roomLink" />
+			<button class="copytext" onclick="myFunction()">Copy text</button>
+			
+		</div>
+		<script>
+			window.onload = function() {
+				console.log('hello');
+				// document.getElementById('video').innerText = 'hi, ' + getCookie('display_name').replaceAll("\"", "") + ', pick a video:';
+			}
+			
+			function getCookie(name) {
+				const value = `; ${document.cookie}`;
+				const parts = value.split(`; ${name}=`);
+				if (parts.length === 2) return parts.pop().split(';').shift();
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,63 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css";
+
+
+.wrapper{
+    overflow:hidden;
+}
+
+.wrapper div {
+    /* min-height: 200px; */
+    padding: 10px;
+ }
+
+#video{
+    background-color: lightgray;
+    float:left; 
+    margin-right:10px;
+    width: 900px;
+    height: 525px;
+    min-width: 350px;
+    min-height: 350px;
+    border-right:2px;
+
+}
+
+#users{
+    background-color: lightblue;
+    overflow:hidden;
+    
+}
+#users h3{
+    background-color:lightblue ;
+}
+
+#link{
+    background-color: darkslategray;
+    overflow:hidden;
+    padding: 50px;
+    transform: translateY(70%);
+}
+
+.copytext{
+    background-color: red;
+    border-radius: 5px;
+    margin-right:1%;
+}
+
+#roomLink{
+    background-color: gray;
+    width: 250px;
+
+}
+button{
+    margin:10px;
+}
+@media screen and (max-width: 900px) {
+    video { 
+     float: none;
+     margin-right:10;
+     width:auto;
+     border:0;
+     border-bottom:2px solid #000;    
+   }
+ }

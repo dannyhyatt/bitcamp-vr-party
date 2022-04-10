@@ -24,11 +24,6 @@ ws = Blueprint(r'ws', __name__)
 
 rooms = {}
 
-@html.route('/')
-def hello():
-    print('hello')
-    return 'Hello World!'
-
 @ws.route('/echo')
 def echo_socket(socket):
     while not socket.closed:
@@ -58,10 +53,6 @@ app = Flask(__name__,
             static_folder='')
 sockets = Sockets(app)
 
-@app.route("/")
-def hello_world():
-    return "testing"
-
 @app.route('/user', methods=['GET', 'POST'])
 def user():
     print(query := "SELECT * from users WHERE username='{}';".format(request.args.get('username')))
@@ -80,6 +71,21 @@ def signup():
     success = cur.execute(query)
     return 'success: {}'.format(success)
 
+@app.route('/login', methods=['POST'])
+def login():
+    print(query := "SELECT * from users WHERE username='{}' AND password='{}';".format(request.form.get('username'), request.form.get('password')))
+    cur.execute(query)
+    info = cur.fetchone()
+    res = app.make_response('')
+    res.set_cookie("username", value=info[0])
+    res.set_cookie("password", value=info[1])
+    res.set_cookie("profile_img", value=info[2])
+    res.set_cookie("display_name", value=info[3])
+    res.headers['location'] = '/createparty.html'
+
+    return res, 302
+    # return '{}'.format()
+
 app.register_blueprint(html, url_prefix=r'/')
 
 sockets.register_blueprint(ws, url_prefix=r'/')
@@ -88,5 +94,6 @@ sockets.register_blueprint(ws, url_prefix=r'/')
 if __name__ == "__main__":
     from gevent import pywsgi
     from geventwebsocket.handler import WebSocketHandler
-    server = pywsgi.WSGIServer(('0.0.0.0', 443), app, keyfile='privkey.pem', certfile='fullchain.pem', handler_class=WebSocketHandler)
+    server = pywsgi.WSGIServer(('127.0.0.1', 8000), app, handler_class=WebSocketHandler)
+    # server = pywsgi.WSGIServer(('0.0.0.0', 443), app, keyfile='privkey.pem', certfile='fullchain.pem', handler_class=WebSocketHandler)
     server.serve_forever()
