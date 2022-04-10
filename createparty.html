@@ -78,6 +78,7 @@
 					printInput();
 				} else if(event.data.startsWith('[')) {
 					// todo update the profile pictures
+					console.log()
 					printInput();
 				} else if(event.data.startsWith('time:')) {
 					console.log('going to: ' + event.data.replace('time:', ''));
@@ -139,6 +140,10 @@
 			recognition.onspeechend = function () {
 				recognition.interimResults = false;
 			};
+
+			recognition.onend = function() {
+				recognition.start();
+			}
 
 			recognition.onerror = function (event) {
 				message.textContent = "Error occurred in recognition: " + event.error;
